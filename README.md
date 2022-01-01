@@ -132,3 +132,33 @@ Creating a VPN gateway which is needed in order to province connectivity between
 9. Finish creating the Virtual network gateway. This process can take 30-45 minutes for deployment.
 10.   Access Notificaions to click on Go to resource.
 11.   Notice in the Overview section that the IP address is the same as in Step 8.
+
+### Net Security group (NSG)
+
+It's a basic cloud based firewall. However, it won't have all the features of a traditional firewall. It's mostly a basic functionality to restrict access to given resource.
+
+#### Use NSGs on these areas to limit exposure:
+
+-  Securing traffic flow between:
+   -  Applications to internet.
+   -  Applications to applications.
+   -  Applications to users.
+
+#### Tools to create NSGs
+
+-  Azure portal.
+-  Powershell / Linux terminal.
+-  Azure CLI.
+
+#### Steps to create NSG (Using Azure portal)
+
+1. Create NSG:
+   -  Login to Azure portal.
+   -  Go to Networking -> Network security group.
+   -  Go into basics tab and define prameters(Subcription, Resource group, Name, Region).
+   -  Finally, review and create.
+2. Create Security rule.
+   -  Within the Axure portal, go to NSG and select the NSG you need to modify.
+   -  In the NSG menu bar go to inbound security rules or outbound security rules.
+   -  Add values for the diffren applicable sections (Source, Source IP, Ports, destinations ...).
+   -  Review and create.
