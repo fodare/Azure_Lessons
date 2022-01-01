@@ -1,8 +1,8 @@
 # Azure_Lessons
 
-_A Readme file to help document my Azure services knowledge and lessons._
+_A README file to help document my Azure services knowledge and lessons._
 
-## Lesson 2: Azure cloud capablities.
+## Lesson 2: Azure cloud capabilities.
 
 ### New Terms:
 
@@ -10,7 +10,7 @@ _A Readme file to help document my Azure services knowledge and lessons._
     	DB_Server - Uses database application to provide Database services to Web applications, Web servers or other services.
     	Email- servers - Used for handling delivery of email through a network with an email software.
 
-### How to create a web server:
+#### How to create a web server:
 
     	1 Login to the Azure portal.
     	2 Go to Services and select Viretual machines.
@@ -59,7 +59,7 @@ _A Readme file to help document my Azure services knowledge and lessons._
 
     			Public IP address of the LoadBalancer:52.236.152.46
 
-### Azure APP Service: Just an http service in azure for hosting applications.
+### Azure APP Service: Just an HTTP service in azure for hosting applications.
 
 #### Creating a DNN Web APP service:
 
@@ -95,3 +95,40 @@ _A Readme file to help document my Azure services knowledge and lessons._
     		9	You will see the back end portal for DNN if at the top right you are logged in as Superuser Account.
 
     Service level agreements. (Aggrement between the data center and the consumers regarding uptime and allowed downtime).
+
+## Creating VPN Gateway.
+
+Creating a VPN gateway which is needed in order to province connectivity between and on-premise environment and resources within Azure. This is useful in situations that you have Azure resources that you do not want to be accessible on the general Internet.
+
+#### How to create a VPN Gateway
+
+1. Use the Navigation Pane on the top left to navigate to the Virtual networks to create a new virtual network.
+2. Select an existing resource group from the dropdown.
+3. For the instance details:
+   -  Name: {Enter a unique name}.
+4. In IP Addresses there should be no conflict with the default but if you are using a pre-existing Azure account with already established networks you may run into conflicts.
+
+   -  IPv4 address space: 10.0.0.0/16.
+   -  Subnet name: default.
+   -  Subnet address range: 10.0.0.0/24.
+
+5. In Security, you will want the default settings with all the options (Bastion Host, DDoS Protection Standard, and Firewall) being Disabled.
+6. Finish creating the virtual network.
+7. Navigate to Virtual network gateways to click on Create virtual network gateway with the following values:
+   -  Name:{Unique name}
+   -  Region: Same region used for virtual network.
+   -  Gateway type: VPN.
+   -  SKU: {Unique name}.
+   -  Generation: {Select generation of choice}.
+   -  Gateway subnet address range: 10.0.255.0/27 same settings shown in Step 4.
+   -  Virtual network: same as step 3.
+   -  Gateway subnet address range:10.0.1.0/24.
+8. For Public IP address.
+   -  Select Create new.
+   -  Public IP address name: vpnGW1IP
+   -  Public IP address SKU: Basic.
+   -  Enable Active-active mode: Disabled.
+   -  Configure BGP: Disabled.
+9. Finish creating the Virtual network gateway. This process can take 30-45 minutes for deployment.
+10.   Access Notificaions to click on Go to resource.
+11.   Notice in the Overview section that the IP address is the same as in Step 8.
