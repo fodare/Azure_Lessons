@@ -154,7 +154,7 @@ It's a basic cloud based firewall. However, it won't have all the features of a 
 
 1. Create NSG:
    -  Login to Azure portal.
-   -  Go to Networking -> Network security group.
+   -  Go to Networking → Network security group.
    -  Go into basics tab and define prameters(Subcription, Resource group, Name, Region).
    -  Finally, review and create.
 2. Create Security rule.
@@ -162,3 +162,53 @@ It's a basic cloud based firewall. However, it won't have all the features of a 
    -  In the NSG menu bar go to inbound security rules or outbound security rules.
    -  Add values for the diffren applicable sections (Source, Source IP, Ports, destinations ...).
    -  Review and create.
+
+### Use NSG to open ports for FTP service.
+
+1. In the Azure Portal navigate to Virtual Machine and create VM.
+2. Enable IIS and FTP server from server manager.
+3. Open IIS manaer.
+   -  Navigate to connections and right-click on the web service to expand its menu.
+   -  Right-click on sites and select Add FTP Site ... with the following properties:
+   -  FTP Site name:{Enter desired site name}
+   -  Physical path: {Path to file to be shared}
+4. Binding and SSL settings:
+   -  IP address: All unassigned.
+   -  Port: 21.
+   -  Select start FTP site automatically.
+   -  SSL: Require SSL.
+   -  SSL certificate: Tenant encryptioncert.
+5. Authentication and Authorization info:
+   -  Authentication: Basic.
+   -  Allow access to: All users.
+   -  Permissions: Select both Read and Write.
+6. Click finish.
+
+Now at this point you may be able to connect to FTP server from the Virtual Machine, but not from the outside. If you type cmd in the Windows search box and type telnet localhost 21 you should get a response. So, now we need to proceed to configure server for outside access by modifing the internal firewall as well as the Azure NSG rules.
+
+1. Navaigate to service and select FTP firewall support.
+2. Under Actions on the right, select Open Feature.
+3. In FTP Firewall Support for Data Channel Port Range set it to 5000-6000 and click Apply on the right. You will get prompted to configure firewall to allow FTP access for both the control channel and data channel port range.
+4. Navigate to Windows Defender Firewall with Advanced Security.
+5. Click on Inbound rules and select New rule.
+6. Go through the Rule's Wizard, select port and continue.
+   -  Select specific local ports and put 21, 5000-600 and continue.
+   -  Select Allow the connection and continue.
+   -  For When does this rule apply keep the checkbox selected for all three (Domain, Private, Public).
+   -  Name: FTPservice.
+   -  Click finish.
+7. Return to IIS Manager and highlight myftpsite. Select FTP Firewall Support and on the right, click on open feature.
+   -  Data Channel port range is already configured in a previous step and is not editable in this section.
+   -  External IP address of Firewall enter the public IP address for your VM.
+      The public IP address of your Virtual Machine may have changed from when you initially deployed.
+8. Click on Apply to process the changes.
+9. Restart the FTP service. This is a best practice for anytime you make changes. Open your CMD and:
+   -  Type net stop ftpsvc to stop the FTP service (CMD).
+   -  Type net start ftpsvc to restart the FTP service.
+10.   Return to the Azure Portal to modify the NSG rule. The NSG was automatically created when we created the virtual machine, we now just need to add an inbound rule. Azure Portal>Virtual Machines>VM deployed>Settings>Networking.
+      -  Click on Add inbound port rule.
+      -  Destination port: 21, 5000-6000.
+      -  Rule name: FTPservices. - All other entries can remain as default.
+
+You will see a warning about port 5432 being exposed. This is not a production server and database services are not installed, so you can disregard and click Add.
+Now you should be able to connect to the server through FTP services from the outside. You can either test from telnet from outside the server or if you have an FTP program(i.e. zilezilla, cute FTP, etc.) you should be able to connect using the Azure Public IP address of the virtual machine as the host, iisadmin as the FTP username and the RDP password for iisadmin for the FTP password.
