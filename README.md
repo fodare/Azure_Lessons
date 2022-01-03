@@ -212,3 +212,5 @@ Now at this point you may be able to connect to FTP server from the Virtual Mach
 
 You will see a warning about port 5432 being exposed. This is not a production server and database services are not installed, so you can disregard and click Add.
 Now you should be able to connect to the server through FTP services from the outside. You can either test from telnet from outside the server or if you have an FTP program(i.e. zilezilla, cute FTP, etc.) you should be able to connect using the Azure Public IP address of the virtual machine as the host, iisadmin as the FTP username and the RDP password for iisadmin for the FTP password.
+
+## Lesson 3: DEsigning for backup and recovery.
