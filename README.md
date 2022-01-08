@@ -250,3 +250,36 @@ Now you should be able to connect to the server through FTP services from the ou
    -  Seet the Time to 30min - 1 Hour after you create the Policy.
    -  Timezone: Set it to your local time Zone.
 4. At the top, click Save.
+
+#### Restore a VM from Backup.
+
+Create a Storage account.
+
+1. From Azure portal and search for Stroge accounts.
+2. Click stroge account and enter the properties below:
+   -  Resource group: Slect desired resource group or create a new one.
+   -  Stroage account name: {Enter desired account name}
+   -  Region: Same as the VM region.
+   -  Performance: standard.
+   -  Account kind: Stroage V2 (gneral purpose).
+   -  Replication: Locally redundant storage.
+3. Finish creating the stroage account.
+
+#### Shutting Down VM to be Restored.
+
+1. In the Azure portal go to Webserverbackups resource group and select web01vault.
+2. Under Protected items select Backup items.
+3. Under BACKUP MANAGEMENT TYPE, click on Azure Virtual Machine.
+4. Confirm that the backup has already completed by looking un Latest restore point.
+5. Click on the 3 dots on the far right to access the context menu and click Restore VM.
+6. In the Restore Virtual Machine, under the field for Restore pointclick on Select.
+7. In Select restore point, you should see at least one restore point and select the most recent restore point and click OK to select the restore point.
+8. Returning to the Restore Virtual Machine you will have these options:
+   -  Restore configuration: Replace existing.
+   -  Staging location: Select the already created storage account.
+9. Finish the restoe by clicking Restore.
+10.   Check the progress of the restore by going to the {Target VM}>Monitoring>Backup Jobs. There is a backup running as well because Azure Backup takes a snapshot of the VM before replacing the disk.
+11.   Refresh periodically for the status to update.
+12.   After the Virtual Machine is successfully restored you should be able to start it and login.
+
+#### Restore files from Backup
