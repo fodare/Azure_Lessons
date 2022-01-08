@@ -302,3 +302,46 @@ This is where we:
    -  Rearchitect - Significant changes.
    -  Rebuild - from the ground up.
    -  Replace - Alternative.
+
+#### Create a VM with SQL
+
+1. From Azure portal find SQL virtual machines.
+2. Click Create SQL virtual machines.
+3. For image, {Select desired verion}:
+   -  Resource group: Select desired or create new one.
+   -  Create a new server and give it desired names.
+   -  Virtual machine name: {Enter desired name}
+   -  Region: {Select desired region}.
+   -  Availibility options: No infrastructure redundancy required.
+   -  Image: default.
+   -  Size: {Select desired size.}
+   -  Username: {Enter desired username}.
+   -  Password: {Enter desired password}.
+   -  Public inbound ports: Allow selected ports.
+   -  Select inbound ports: RDP (3389).
+   -  Do not click check box for use existing license.
+4. Navigate to SQL server settings:
+   -  SQL Authentication: Enable.
+   -  Login name: {Enter login name}.
+   -  Password: (meets the requirments).
+   -  SQL Server License: No
+   -  Auutomated backup: enable
+   -  SQL Server Machine Learning Services (In-Database): Disable.
+5. Finish deployment the SQL VM, which may take some time so go to the next step.
+6. Download the sample database from Microsofts Azure Adventure Works to your local computer.
+7. Once Step 5 is deployed, click on Go to resource.
+8. Click on Connect>RDP and click Download RDP File.
+9. Copy the AdventureWorksLT2019.bak file into the Temporary Storage drive.
+10.   Connect to the VM and login with the username and password you created in Step 3.
+11.   On your local machine search and navigate to Microsoft SQL Server Management Studio ## and click Connect.
+12.   In the window, enter the following settings:
+      -  Server type: Database engine.
+      -  Server name: {Same as step 3}.
+      -  Authentication: SQL server Authentication.
+      -  Login and password: {Same as step 4}.
+13.   Click connect.
+14.   Right click on Databases and select Restore database....
+15.   Click on the circle/radio button to the left of Device.
+16.   Click on the 3 dots to the right of Device and the field.
+17.   In the new window click Add and navigate and select the AdventureWorksLT2019.bak.
+18.   Follow the setup leaving everything as default until you get the following message: Database 'AdventureWorksLT2019' restored successfully.
