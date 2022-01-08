@@ -282,4 +282,23 @@ Create a Storage account.
 11.   Refresh periodically for the status to update.
 12.   After the Virtual Machine is successfully restored you should be able to start it and login.
 
-#### Restore files from Backup
+## Lesson 4: Azure Migration
+
+The four main stahes to migrate onpremise services into Azure cloud.
+
+![Stages of Azure migraton](StagesofAzuremigration.png)
+
+#### Assess stage:
+
+This is where we:
+
+-  Identify servers, apps and resources to be migrated.
+-  Make invertory of on-premises computing resources and dependencies.
+-  Develop a map of how all the piecies of the application communicate.
+-  Done with service MAP.
+-  Best Migration Option for the Scenario:
+   -  Rehost - Minimal.
+   -  Refactor - Optimaztion.
+   -  Rearchitect - Significant changes.
+   -  Rebuild - from the ground up.
+   -  Replace - Alternative.
