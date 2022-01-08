@@ -213,4 +213,40 @@ Now at this point you may be able to connect to FTP server from the Virtual Mach
 You will see a warning about port 5432 being exposed. This is not a production server and database services are not installed, so you can disregard and click Add.
 Now you should be able to connect to the server through FTP services from the outside. You can either test from telnet from outside the server or if you have an FTP program(i.e. zilezilla, cute FTP, etc.) you should be able to connect using the Azure Public IP address of the virtual machine as the host, iisadmin as the FTP username and the RDP password for iisadmin for the FTP password.
 
-## Lesson 3: DEsigning for backup and recovery.
+## Lesson 3: Designing for backup and recovery.
+
+#### Creating backup for virtuall machines.
+
+1. From Azure portal go to virtual machines and select target VM.
+2. Click on Operations and click on Backup.
+3. Create and new Recovery Services vault:
+   -  Give desired name.
+   -  Notice the BackUp Frequency is daily at a specific time. This can be modified in the backup policy.
+4. Enable Backup, this may take some time.
+5. Manually run the backup by going to Virtual Machines>{Your VM}}>Operations>Backup and select Backup now.
+6. Leave the Retain Backup Till as the defaukt and continue.
+
+#### Create a new recovery servicea vault for a load balanced web server.
+
+1. From Azure portal nevigat to recovery Services vaults and click New.
+2. These will be the properties for the Recovery Service vault, then click through to create.
+3. Once the deployment is completed, go to resource.
+4. In getting started click on Backup and here are the properties.
+   -  Where is your workload running?: Azure.
+   -  What do you want to backup?: Virtual Machine.
+   -  Click Backup to complete.
+5. Use an existing Backup Policy and click Add.
+6. Confirm that you see both virtual machines for the load balancer.
+   -  If you do not then this means that the Recovery Services vault is in a diffrent Region then the virtuak machines. To fix that:
+      -  Find the location of the VM.
+      -  Create a new Recovery services vault in that location.
+7. Finish creating the vault.
+
+#### Managing Backup Policy.
+
+1. Navigate to the Web loadbalancers Recovery Services Vault. Manage and click Backup Policies.
+2. Click on DefultPolicy.
+3. Click on modify with the following properties:
+   -  Seet the Time to 30min - 1 Hour after you create the Policy.
+   -  Timezone: Set it to your local time Zone.
+4. At the top, click Save.
