@@ -111,3 +111,45 @@ Types:
 - Front door - Handles encryption as well as the decryption request.
 - Azure Load balancer - Evenly distribute traffic amongst connected VMs.
 - Traffic manager - DNS based load balancing the allows distribution of traffic for application across the global Azure region.
+
+### creating a load balancer
+As an example create  multile VM (Ubuntu(Apache web server) / Windows with IIS). For ubuntu, once the VM are created ssh into the machine and type in the code below to create and start an Apache webserver. 
+
+- sudo apt update
+- sudo apt install apache2 -y
+- sudo ufw allow 'Apache'
+- sudo systemctl start apache2
+
+Once this completed, copy and search the public IP address of the VM on your loacl machine web browser, you should see an Apache2 ubuntu default page. It is as well possble to create the loadbalancer first then the VM's later
+
+Now to create the load balancer:
+From Azure portal search for loadbalancer and fill in necessary information:
+- Instance deatils: 
+   - Name: {Desired load balancer name}
+   - Region: Same regions as the VMs
+   - SKU: Bacic. Standard needs a few diffrent congigutation fields.
+   - Type: Public
+   - Tier: Regional
+- Frontend IP config 
+   - Name: {Enter desired name}
+   - Public IP address: Add a new public IP address, with these values.
+      - Name: {Desired name}. 
+      - Assignment: Static
+- Backend pools:
+   - Name: {Desired name}
+   - Virtual network: Select the existing virtual network in which VMs are running.
+   - Assiociated to: VMs. Add the VMs to the current pool.
+- Inbound rule >> Load balancing rule
+   - Name: {Desired name}
+   - Frontend IP address: Choose the one you have created above.
+   - Backend pool: Choose the one you have created above
+   - Protocol: TCP 
+   - Port and backend port: 80
+   - Helth probe: Create a new one
+      - Protocol: HTTP 
+      - Port: 80
+      - Default path: /
+      - Interval: 5 seconds
+      - Unhelthy threshold: 2 consecurtive failures
+
+Once your Load Balancer is deployed, copy its public IP address and paste it into the browser. If everything is set up correctly, you should see the web server from one of the VMs in your backend pool. Suppose, if you see the swever1 web server, delete/stop that VM from the Virtual Machines service manually to observe if the Load balancer redirects the traffic to the other servers.
