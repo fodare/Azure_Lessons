@@ -189,5 +189,67 @@ Best practice design styles:
 - Big computer.
 - Big data.
 - Event- driven architecture.
-- Micro services. 
-- N-Tier application(Try to break the application into smaller modules)
+- Micro services / N-Tier application(Try to break the application into smaller modules)
+
+
+### Designing a network solution in Azure.
+When designing a networ ksolutions for azure resources, you will need to consider few diffrent factors such as: 
+- Latency.
+- Security.
+- Speed.
+- Redundancy.
+Tools used to communicate between On-premise and Azure: 
+- VNET/VNET peering
+- Gateway
+- VPN
+- Network watcher
+
+Tools below determinse the method: 
+- Using VNTE
+- Virtual Neywork endpoints
+- VNET peering 
+- Private Link.
+
+Blow are some waay to comminicate with On-premise resources: 
+- Point - site VPN 
+- Site - Site VPN
+- Azure ExpressRoute
+
+Diffrence between policy based VPN and route based VPN
+|Policy based VPN|Route based VPN|
+|---|---|
+| Uses a combina tion of prefixes from both networks to define how traffic is encrypted/decypted through IP tunnels| Use any-any traffic selectors and routing/forwarding tables to direct traffic to diffrent IPSec tunnels|
+| Allows for multiple VPNs via singlr Vnet Gateway | If device supports it this better than policy based  |
+| Does not support VPN diagnotics in Azure | Can perfrom VPN diagnotics in Azure|
+
+### Creating route based VPN
+
+1. Create a virtual netwotk
+   - From azure portal
+      - Search "Virtual networks"
+      - Click Add
+      - Select or create new  resource group
+      - Enter name
+      - Select region
+   - IP Address
+      - Click default subnet and change name to {Desired name}
+      - Security: All disabled
+      - Review and create
+   - Create virtual network gateway
+      - Search and select "Virtual network Gateways".
+      - Click 'Crate virtual Network Gateway" or +Add.
+      - Select region and enter name.
+      - Select generation.
+      - select vitual network
+      - Enter public IP address name
+      - Review and create
+   - Configure VPN
+      - Go to resource
+      - Under settings, Click 'point-to-point configuration
+      - Click 'Configure now'
+      - Enter address pool {xxx.xxx.x.x/xx}
+      - Select tunnel type IKE2 ans SSSTP(SSL)
+      - Root certificate -> Azure certificate
+      - copy/paste daa into textbox
+      - Click "Download VPN clinet" 
+      - Open and Run the executable in order to install VPN client.
