@@ -153,3 +153,24 @@ From Azure portal search for loadbalancer and fill in necessary information:
       - Unhelthy threshold: 2 consecurtive failures
 
 Once your Load Balancer is deployed, copy its public IP address and paste it into the browser. If everything is set up correctly, you should see the web server from one of the VMs in your backend pool. Suppose, if you see the swever1 web server, delete/stop that VM from the Virtual Machines service manually to observe if the Load balancer redirects the traffic to the other servers.
+
+### Creating SQL database 
+To create an Azure SQL service. You have to create a SQL db using Azure portal. 
+Search and open Azure SQL service then select SQL database. 
+Basic: 
+   - Resource group: chose existing or create a new one.
+   - Database name: {Enter desired name}.
+   - Server - Create new one.
+      - Server name: {Desired server name}
+      - Server location: Choose closet region to you/ where your Web app is hosted.
+      - Authentication method: Use SQL authentication.
+      - Server admin login / Password: {enter desired credentials}
+   - Networking: 
+      - Network connectivity: Public endpoint.
+      - Firewalls rules: Allow azure services and resources to access this server.
+      - Connection policy: Defult
+   - USer SQL eleastic pool: {Yes / No}.
+   - Compute + stroge: Depend on choice.
+   - Backup stroge redundacy: Locally -redundant backup storage.
+   - Review and create
+Once the resource is created, you would find the connection string from the resource overview page.
