@@ -174,3 +174,20 @@ Basic:
    - Backup stroge redundacy: Locally -redundant backup storage.
    - Review and create
 Once the resource is created, you would find the connection string from the resource overview page.
+
+### Best practice design principles
+When designing Azure solutions always take into considreation:
+- Self-healing capablity.
+- Redundancy.
+- Scale-out.
+- Evolution.
+- Operations.
+- Managed service.
+- Business needs.
+
+Best practice design styles: 
+- Big computer.
+- Big data.
+- Event- driven architecture.
+- Micro services. 
+- N-Tier application(Try to break the application into smaller modules)
