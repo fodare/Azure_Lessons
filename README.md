@@ -253,3 +253,42 @@ Diffrence between policy based VPN and route based VPN
       - copy/paste daa into textbox
       - Click "Download VPN clinet" 
       - Open and Run the executable in order to install VPN client.
+   - Poral screen
+      - Select the VPN you just created and click "Connect"
+   - Agent windows: 
+      - Click "connect" 
+
+### Network Security Group (NSG)
+- It's a basic cloud based firewall. 
+- It doesn't have all the features of a tradintional firewall. 
+- Has the basic functionality to restrict access to your resources.
+
+You can use NSG on to limit resource exposure when: 
+- Securing traffic flow between:
+   - Application - Intenet 
+   - Application - Applications
+
+Tools to create NSGs
+- Azure Portal
+- Powershell 
+- Azure CLI
+
+Creating NSG from Azure portal: 
+- Go to networking -> Network security group
+- Go into Bascis Tab and define parameters(Sunscription, Resource group, Name, Region)
+- Review and create -> Create
+
+Creatting security rule:
+- Find and delect the NSG you'd like to modify.
+- From the NSG menu bar, click on inbound security rules or outbound security rules.
+- Add values for the diffrent applicable sections(Source, Source IP, Port, destination, etc.)
+- Click Review + Create -> Create
+
+Creating a Network Endpoint to secure Azure storeage Account. 
+Limit network access to Azure resources to a virtual network subnet through a network service endpoint
+
+Sercuring Azure storage account via endpoint: 
+- Create Vnet with subnet.
+- Enable endpoint.
+- Restrict network access of subnet.
+- Restrict network access to resource (Azure storage account)
