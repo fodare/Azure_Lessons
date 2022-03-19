@@ -365,3 +365,70 @@ Protection Plan for An On-premise Enviroment.
    - Set the Time to {desired time range} after you create the plolicy.
    - Timezone: Set it to your own time zone.
 4. At the top, click Save.
+
+### Azure Site Recovery
+Is a tool the has disaster recovery as a service. With Azure site recovery, you do not have to worry about having a seperate facility that you maintain for the pueposes of having another physical site to protect against disaster occuring at your main site.
+
+### Restore a VM from Backup
+
+Before we can start with recovery, we will need to create a storge account.
+1. From Azure portal navigate to the 3 line icin in the top lef to select Storage accounts.
+2. Click Create storage account and enter the following properties:
+   - Resource group resource associated with target VM
+   - Storage account name: Stroage(LastName) has to be unique.
+   - Region: Should be automatically set to target VM region
+   - Performance: standard.
+   - Account Kind: stroage V2
+   - Replication: Locally redudant stroage(LRS)
+3. Finish creating the stroage account.
+
+Shutting down VM to be Restored.
+Now we cango to the recovery services vault to start the revoery process. In order to do this, the VM that is being restrored VM must be shut down before you start the process.
+1. In the Azure Portal go to Webserverbackups resource group and select {Target VM}.
+2. Under Protected items select Backup items.
+3. Under BACKUP MANAGEMENT TYPE, click on Azure Virtual Machine.
+4. Confirm that the backup has already completed by looking in Latest restore point.
+5. Click on the 3 dots on the far right to access the context menu and click Restore VM.
+6. In the Restore Virtual Machine, under the field for Restore pointclick on Select.
+7. In Select restore point, you should see at least one restore point and select the most recent restore point and click OK to select the restore point.
+8. Returning to the Restore Virtual Machine you will have these options:
+      - Restore configuration: Replace existing
+      - Staging Location: Select the already created stroage account.
+9. Finish the restore by clicking rstore.
+10. Check the progress of the restore by going to {servervault}>Monitoring>Backup Jobs. There is a backup running as well because Azure Backup takes a snapshot of the VM before replacing the disk.
+11. Refresh periodcally for th status to update.
+12. After the virtual machine is successfully restored you should be able to start it and login.
+
+### On-premise Backup steps
+
+1. Login to the Azure portal.
+2. Create a recovery services vault.
+3. Setup the stroge replication (Locally or geo-redundant)
+4. Download software packege from Azure portal and install on premise.
+
+### cloud VM Backups steps
+1. Login to the Azure portal
+2. Go to VM and under operations, select Backup
+3. Create a recovery services vault.
+4. Select the option to Backup now.
+
+### Restoring files from Backup
+Set up a Simulation to Recover index.html
+   - Login to server web01lb via RDP.
+   - Delete the index.html file.
+
+Restore index.html
+
+   - From Azure Portal navigate to Backup items for the webloadbalancer Recovery Services.
+   - Click on Azure Virtual Machines and observe that both load balance web servers are present.
+   - Access the Context menu for web01lb and select File Recovery.
+   - Generate the script and password and then download the script onto you local computer
+   - Run the executable and it will open your command prompt on the local system asking for a password.
+   - Copy and paste the password from the Azure Portal in the field Password to run the script.
+   - Upon successfu connectiion, the PowerShell prompt will show Connection succeeded!.
+   - In your file browser you will see two drives mounted on your local system (System Reserved (E:) and       Windows (F:)).
+   - Navigate to the Windows Folder and navigate to the path F:\inetpub\wwwroot and see the custom index.html file.
+   - Copy the iisstart.htm file back to your Web Server.
+   - Finish the process by clicking the Unmount Disks.
+   - Quit (Q) the PowerShell
+   - In the Azure Portal it will show the status Unmount successful
