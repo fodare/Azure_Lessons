@@ -285,10 +285,83 @@ Creatting security rule:
 - Click Review + Create -> Create
 
 Creating a Network Endpoint to secure Azure storeage Account. 
-Limit network access to Azure resources to a virtual network subnet through a network service endpoint
+Limit network access to Azure resources to a virtual network subnet through a network service endpoint.
 
 Sercuring Azure storage account via endpoint: 
 - Create Vnet with subnet.
 - Enable endpoint.
 - Restrict network access of subnet.
-- Restrict network access to resource (Azure storage account)
+- Restrict network access to resource (Azure storage account).
+
+
+## Lesson 3: Designing for Backup and Recovery
+
+In order to create a plan for your on-premise enviroment, you might need to define the requirements. Below are details the you will need to be mindful of
+- Identify workloads and usage.
+- Plan for usage patterns.
+- Establish availablity metrics
+   - Mean time to RecoveryI(MTTR)
+   - Mean time between Failures (MTBF)
+- Establish revovery metrics
+   - Recovery Time Objectives(RTO)
+   - Recovery Point Objective(RPO)
+- Determine worload availablity targets.
+- Understand SLA
+
+### Best practice for implementing a Backup plan
+- Perform a failure mode analysis.
+- Have a redundancy plan.
+- Utilize resiliency strategies when applicable.
+- Make availablity a considration when you are designing a solution.
+- Have a plan and documentation as it relates to how you store backup andreplicate data.
+
+### Settiings up Azure Backups
+- Azure portal provides a Wizard. 
+- Direct you to the appropriate components needed to be dewnloaded and deployed.
+- Identifying your backup goals and help you pick the correct protection.
+
+Adavantages:
+- Full felxiblity for when backups are taken (Scheduled backups or manually run).
+- Support for VMs on both Hyper-V and VMware.
+- No special licensing(1.e, System center).
+
+Disadavatges: 
+- Currently unable to backup oracl workload.
+- Always requies live Azure subscription.
+- No support for tape backups.
+
+Protection Plan for An On-premise Enviroment.
+
+### Creating backup for your Virtual Machines
+1. From Azure Portal find your target VM.
+2. Navigate to Operations and click on Backup.
+3. Create a new REcovery Services Vault: 
+   - Name: {Enter desired name}.
+   - Notice the Backup Frequency is dialy at a specific time. This can be modified in the backup policy.
+4. Enabale Backup, this may tak some time to enable (3 - 10 min).
+5. Manually run the backup by navigating to Virtual Machine > {Target machine}>Operations>Backup and select backup now.
+6. Leave the Retain Backup Till as the defualt value and continue.
+
+### Creating a new REcovery Services Vault for a Load balanced Web server
+1. From the Azure Portal navigate to Recovery Services Vaults and click "+New"
+2. These will be the properties for the Recovery Service vault.
+   - Click through to create.
+3. Once depeloyment is complete,  click Go to resource.
+4. In Getting started Click on Backup and below are the properties: 
+   - Where is your workload running?: Azure
+   - What do you want to backup?: Virtual Machine.
+   - Click Backup to complete.
+5. Use an existing Backup Policy (DefaultPlicy) and click Add.
+6. Confirm that you see both Virtual machines for the load balancer.
+   - If you do not then this means that the Recovery Services Vault is in a different Region then the Virtual Machines. To fix this do the following:
+      - Find the location of the VM.
+      - Create a new Recovery Services vault in the location.
+7. Finish creating the vault.
+
+### Managing Backup Policy
+1. Navigate to the web loadbalancers Recovery Services Vault, Manage and click Backup policies.
+2. Click on DefaultPolicy.
+3. Click on Modify with the following properties:
+   - Set the Time to {desired time range} after you create the plolicy.
+   - Timezone: Set it to your own time zone.
+4. At the top, click Save.
