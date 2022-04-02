@@ -431,4 +431,62 @@ Restore index.html
    - Copy the iisstart.htm file back to your Web Server.
    - Finish the process by clicking the Unmount Disks.
    - Quit (Q) the PowerShell
-   - In the Azure Portal it will show the status Unmount successful
+   - In the Azure Portal it will show the status Unmount successful.
+
+## Lesson 4: Migration
+
+The section covers a short intro into the steps involved when planning to migrate into Azure cloud. Azure also numbers of tools that can be used to help simply migrations. Example is Azure migrate, DB migration tools e.t.c.
+
+The main steps are: 
+   1. Assess - Analyze and review the onppremise enviroment.
+   2. Migrate - Decide what resorces will be migrated from on-premise into Azure cloud and also use pricing tools and usage hstory to determine the appropriate cloud products.
+   3. Optimize- Make the necessary adjustments to ensure the bisuness applications are running at their optimal level.
+   4. Monitoring - Gathering logs and data associsted with health and performance of resources migrated into Azure cloud to helo determine if there are any underutilized and potential for further adjustments to help reduce costs.
+
+Assess stage: 
+
+- Idetifying servers, apps and resources to be migrated.
+- Inventory of on-premises cpmputing resources and dependecies.
+- Developer a map of how all the diffrent pieces communicates and interact with one another.
+- Done with service map
+
+Best migration options depending on the scenario: 
+
+- Rehost - minimal effort.
+- Refactor - Optimozation. 
+- Rearchitect - Significant changes. 
+- Rebuild - starting from scracth. 
+- Replace - Alternatives.
+
+Migration strategy:
+
+Do make sure all stakeholders are well informed and aware of migration steps.
+
+Below are some final analysis before migrations. 
+- Decide on either Active directory / Azure Active Directory.
+- Make a list of resources that will be migrating and remain on-premise.
+- Get a projected timeline of on-premise resources will be migrated in the future.
+- Migrate as many applicatins to PaaS / SaaS to minimize patching and updates.
+- Automate backups strategy for both on-premise and cloud resources with one vendor.
+
+Migration stage: 
+
+- Destination systems and services on Azure should be finalized.
+- An alternative to having resources creates in Azure before migrations
+   - ASR (Azure site recovery. Required resources created for you in Azure enviroment)
+   - Azure Data migrations service
+- Start small- get to know all of the tools before migrating Advanced solutions.
+- Do not decommission on-premise infrastructure too soon.
+
+Post Migration checklist
+
+- Review security settings of VMs after migration. 
+- Backup schedule that coordinates with your workload. 
+- For additional protection, use ASR to replicate your VM's to another region.
+
+Monitor:
+
+Azure monitor can be utilized to provide health and perfrmance details. It can be useful when: 
+- Having difficulties reviewing raw application data.
+- When certain data might not be relevant to your needs.
+- Alerts to notify you when recommended tresholds for resources are breached. (e.g Autoscale matric, CPU usage)
