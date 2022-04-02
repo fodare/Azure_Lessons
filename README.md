@@ -490,3 +490,83 @@ Azure monitor can be utilized to provide health and perfrmance details. It can b
 - Having difficulties reviewing raw application data.
 - When certain data might not be relevant to your needs.
 - Alerts to notify you when recommended tresholds for resources are breached. (e.g Autoscale matric, CPU usage)
+
+## Lesson 5: Automation
+
+This chapter we would discuss how to utilize ARM templates and other automated tools to help speed us deployment of resources. Using ARM templates has multiple advantages over manual deployment procedures. Some of the advanatages are: 
+- Consistency within deployments.
+- complex deployments are made easy.
+- There is a reduction of errors.
+- Easily reused.
+- Faster deployment as it requires human interactions.
+
+### Elements of ARM Template: 
+- Schema - JSON based entries.
+- ContentVersion - Helps track versions of templates.
+- Parameters - Useful to store values before the deployment procedures.
+- Variables - Define expressions that would be reused trought the deployment.
+- Functions - User defined functions.
+- Resources - Define resources that are being defined or updated.
+- Outputs - Holds outputs logs / data after the deployment is done. Can be used to validate a deployment.
+
+Sample steps to delpoy a VM using ARM templates:
+
+From Azure portal, search deploy and select Deploy a custom template. You would be provided with sample preconfigured templates for a linux Virtual machine, Windows Virtual machine, Create a Web app, SQL db etc... You can select one of the sample template and enter details needed for the new VM so you can download the ARM templates / simply deploy the templates from Azure portal.
+
+Example: Deploy a storage account using an ARM template
+
+1. From Azure portal navigate to storage accounts. 
+2. Create a new storage account using the + New button with the following settings: 
+   - Resource group: Select an existing resource group / create a new one.
+      - Stroage-rsg is included with a series of letters/numbers.
+   - Storage account name: {Enter desired name}
+   - Location: {Enter desired location}
+   - Performance: {Standard}
+   - Account kind: StorageV2 (general purpose v2)
+   - Replication: Read-access geo redundant storage (RA-GRS)
+3.  Click Download a template for automation and click Download on the next page.
+4.  Once downloaded, unzip the tempalte.zip and there will be 2 JSONs parameters.json and template.json.
+5.  Open the parameters.json in a text editor.
+6.  Find the following "storageAccountName": and change the value to null to enable a unique value to be added for each deployement.
+7.  Save the parameters.json
+8.  Returning to the Azure Portal navigate to a Services called Deploy a custom template.
+9.  Click on Build your own template in the editor.
+10. Click Load file and select template.json and Save.
+11. Click Edit parameters and select parameters.json and Save.
+12. In the TODO you will enter the following:
+      - Resource group: Storage-rsg
+      - Stroage Account Name: {Enter desired name} This should be a unique name
+13. Follow the rest to deploy your new storage account using the template.
+
+### Desired State Configuration (DSC)
+Can be used to automatically check for required roles/softwares in the virtual machine and install then if needed. This is useful to help make the configurations of related virtual machines more uniform
+
+Elements of DSC script: 
+- Configuration block. 
+- Node block.
+- Resource block.
+
+DCS requirement:
+- Automation account
+- Windows, Linux
+- VMF5.1 installed. 
+
+### Azure policies
+
+Azure policy can be used to automate and enforce organizations / business requirements. It's useful tool to help prevent users from performing certain actions that are against company/industry requirements. In addition to restricting specific actions, Azure Policy also provides a compliance report providing a list of resources that are not compliant. This report will be useful for auditing purposes.
+
+Sample: create an Azure Policy that will prevent users from creating Virtual Machines that are not listed in the approved VM sizes. 
+
+1. From Azure portal. Navigate to plicy and enter the following: 
+2. Navigate to plicy and enter the following:
+ - Scope select the ... to change the scope to desired scope.
+ - Subscription: (default)
+ - Resource group: Stagging
+3. Finish the selection of the policy.
+4. Find the policy with the Name of allowed virtual Machine SKU sizes.
+5. Click on Allowed Virtual Machine sku sizes to see the defination as code for the policy.
+6. Review the compliance report which should be at 100%.
+7. Notice if the provisioning when you try to create a VM in the staging resource group with a Size for a B series, E series, or most other sized Vms.
+ - You should see an error message > Resource (Name) was disallowed by policy (Code: requestDisallowedByPolicy)
+   - Policy: Allowed virtual machine size SKUs
+8. Try creating a VM higher than the one defined in the policy. This should fail.
